@@ -1,0 +1,31 @@
+# arg 1:  the new package version
+# arg 2:  the old package version
+
+KERNEL_NAME=-amd
+KERNEL_VERSION=5.5.9-1-amd
+
+# set a sane PATH to ensure that critical utils like depmod will be found
+export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+post_install () {
+  # updating module dependencies
+  echo ">>> Updating module dependencies. Please wait ..."
+  depmod ${KERNEL_VERSION}
+}
+
+post_upgrade() {
+
+  if findmnt --fstab -uno SOURCE /boot &>/dev/null && ! mountpoint -q /boot; then
+    echo "WARNING: /boot appears to be a separate partition but is not mounted."
+  fi
+
+  # updating module dependencies
+  echo ">>> Updating module dependencies. Please wait ..."
+  depmod ${KERNEL_VERSION}
+}
+
+post_remove() {
+  # also remove the compat symlinks
+  rm -f boot/{initramfs-linux,kernel26}${KERNEL_NAME}.img
+  rm -f boot/{initramfs-linux,kernel26}${KERNEL_NAME}-fallback.img
+}
