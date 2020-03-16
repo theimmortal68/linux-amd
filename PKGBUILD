@@ -39,7 +39,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '0007-v5.5-fsync.patch')
 md5sums=('0a78b1dc48dc032fe505b170c1b92339'
          '2270d981592960013a79d1dd876a8885'
-         'faa7d9a6e7928b8af7e293cfb333969f'
+         SKIP
+         #'faa7d9a6e7928b8af7e293cfb333969f'
          '31cd97f6bc52de17999ecaed60fd90ad'
          'a8a0c0923217837f151ef007f47a4e80'
          'aae8c706fcf69d62559106e11e251699'
